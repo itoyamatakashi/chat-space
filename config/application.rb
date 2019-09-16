@@ -16,4 +16,3 @@ module ChatSpace
     end
   end
 end
-end
