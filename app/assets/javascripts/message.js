@@ -50,5 +50,28 @@ $(document).on('turbolinks:load', function(){
         $('.form__submit').prop('disabled', false);
       }
     })
+    .fail(function(){
+      alert('error');
+    })
   });
-});
+
+  var reloadMessages = function() {
+    var last_message_id = $(".message").last().data('message-id');
+    (location.pathname.match(/\/groups\/\d+\/messages/))  
+    $.ajax({
+        url: location.pathname,
+        type: "get",
+        dataType: 'json',
+        data: {id: last_message_id }
+      })
+      .done(function(messages) {
+        var insertHTML = '';
+        data.forEach(function(message) {
+          $('.messages').append(buildHTML(message));
+        })
+      })
+      .fail(function() {
+      });
+    };
+    setInterval(reloadMessages, 5000);
+  });
