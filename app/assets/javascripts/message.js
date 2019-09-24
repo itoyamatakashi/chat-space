@@ -57,7 +57,7 @@ $(document).on('turbolinks:load', function(){
 
   var reloadMessages = function() {
     var last_message_id = $(".message").last().data('message-id');
-    (location.pathname.match(/\/groups\/\d+\/messages/))  
+    if (location.pathname.match(/\/groups\/\d+\/messages/)){
     $.ajax({
         url: location.pathname,
         type: "get",
@@ -66,12 +66,17 @@ $(document).on('turbolinks:load', function(){
       })
       .done(function(messages) {
         var insertHTML = '';
-        data.forEach(function(message) {
+        messages.forEach(function(message) {
           $('.messages').append(buildHTML(message));
+          scroll();
         })
       })
       .fail(function() {
       });
+    }
+      else {
+        clearInterval(interval);
+      }
     };
     setInterval(reloadMessages, 5000);
   });
